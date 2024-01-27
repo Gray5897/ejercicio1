@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Config;
+
+use Exception;
+use PDO;
+
 class Database
 {
 	public $db;
