@@ -1,5 +1,3 @@
 <?php
 
-    echo "ya te puedes delvolver";
-
-?>
+echo "ya te puedes delvolver";
