@@ -2,23 +2,6 @@
     font-family: sans-serif;
 }
 
-.btn-create-target{
-	margin-bottom: 10px;
-	display: flex;
-	justify-content: end;
-	width: 1300px;
-}
-
-.btn-create-target > button{
-	border:none;
-	background-color: blue;
-	color:#fff;
-	border-radius: 5px;
-	width: 10%;
-	height: 30px;
-	cursor: pointer;
-}
-
 .container{
     width: 1300px;
     height:fit-content;
