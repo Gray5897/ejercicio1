@@ -24,6 +24,7 @@ $targets = $targetController->getTargets();
                     ' . $target['name'] . '
                 </div>
                 <a href="controllers/detalleimage.php" class="detalle" id="' . $target['id'] . '">Ver detalle</a>
+                <button onclick="OpenUpdateTarget(' . $target['id'] . ')" class="btn-update" id="' . $target['id'] . '">Actualizar</button>
             </div>';
 	}
 	?>
@@ -33,4 +34,7 @@ $targets = $targetController->getTargets();
 	function openCreateView() {
 		window.location.replace('/ejercicio1/views/targets/create.php');
 	}
+    function OpenUpdateTarget(id) {
+        window.location.replace('/ejercicio1/views/targets/update.php?id='+id);
+    }
 </script>
