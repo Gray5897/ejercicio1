@@ -19,7 +19,7 @@ $targets = $targetController->getTargets();
   <?php
   foreach ($targets as $target) {
     echo '<div class="target" id"' . $target['id'] . '">
-                <img class= "imgs" src="' . $target['image'] . '" alt="">
+                <img class= "imgs" src="public/images/' . $target['image'] . '" alt="">
                 <div class="titarget">
                     ' . $target['name'] . '
                 </div>
