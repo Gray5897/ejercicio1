@@ -12,11 +12,14 @@ class TargetController
   {
   }
 
-  public function saveTarget($name)
+  public function saveTarget($image, $name)
   {
     try {
       $database = new Database();
-      $database->db->query('INSERT INTO targets(name) VALUES("' . $name . '")');
+      $savetarget = $database->db->prepare('INSERT INTO targets(image, name) VALUES (:image, :name)');
+      $savetarget->bindParam(':image', $image);
+      $savetarget->bindParam(':name', $name);
+      $savetarget->execute();
       header('Location: http://localhost/ejercicio1');
     } catch (Exception $e) {
       echo $e->getMessage();
