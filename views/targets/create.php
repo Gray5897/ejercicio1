@@ -10,37 +10,33 @@ include "../layouts/header.php";
 try {
   if (isset($_POST['btn-save'])) {
     if (isset($_FILES['image'])) {
-        // Se extraen detalles del archivo cargado
-        $fileTmpPath = $_FILES['image']['tmp_name'];
-        $fileName = $_FILES['image']['name'];
-        $fileSize = $_FILES['image']['size'];
-        $fileType = $_FILES['image']['type'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps)); //Se extrae la extension del archivo
-        $newFileName = md5(time() . $fileName) . '.' . $fileExtension; //Se limpia el nombre de caracteres especiales
-        $_POST['image'] = $newFileName;
-        var_dump($_POST['image']);
-        $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'doc');
-        // Se valida que el archivo este en las extensiones compatibles
-        if (in_array($fileExtension, $allowedfileExtensions)){
-          // se almacena en una variable la direccion donde se alojara el archivo
-          $uploadFileDir = '../../public/images/';
-          $dest_path = $uploadFileDir . $newFileName;
-          if(move_uploaded_file($fileTmpPath, $dest_path))
-          {
-            $target = new TargetController();
-            $target->saveTarget($_POST['image'], $_POST['name']);
-          }
-          else
-          {
-            echo 'Se produjo algún error al mover el archivo al directorio de carga.';
-          }
-        }else{
-          echo 'el archivo no esta dentro de las extensiones permitidas paraa imagen.';
+      // Se extraen detalles del archivo cargado
+      $fileTmpPath = $_FILES['image']['tmp_name'];
+      $fileName = $_FILES['image']['name'];
+      $fileSize = $_FILES['image']['size'];
+      $fileType = $_FILES['image']['type'];
+      $fileNameCmps = explode(".", $fileName);
+      $fileExtension = strtolower(end($fileNameCmps)); //Se extrae la extension del archivo
+      $newFileName = md5(time() . $fileName) . '.' . $fileExtension; //Se limpia el nombre de caracteres especiales
+      $_POST['image'] = $newFileName;
+      var_dump($_POST['image']);
+      $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'doc');
+      // Se valida que el archivo este en las extensiones compatibles
+      if (in_array($fileExtension, $allowedfileExtensions)) {
+        // se almacena en una variable la direccion donde se alojara el archivo
+        $uploadFileDir = '../../public/images/';
+        $dest_path = $uploadFileDir . $newFileName;
+        if (move_uploaded_file($fileTmpPath, $dest_path)) {
+          $target = new TargetController();
+          $target->saveTarget($_POST['image'], $_POST['name']);
+        } else {
+          echo 'Se produjo algún error al mover el archivo al directorio de carga.';
         }
-    }else{
+      } else {
+        echo 'el archivo no esta dentro de las extensiones permitidas paraa imagen.';
+      }
+    } else {
       echo 'No se ha seleccionado una imagen en la casilla.';
-      echo var_dump($_FILES['image']);
     }
 
     //$target = new TargetController();
