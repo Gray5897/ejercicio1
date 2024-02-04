@@ -23,10 +23,10 @@ try {
 
 try {
   if (isset($_POST['btn-update'])) {
-    if (empty($_POST['id']) or empty($_POST['name'])) {
+    if (empty($_POST['id']) || empty($_POST['name'])) {
       echo "Debe llenar todos los campos, no se permiten valores vacios";
     } else {
-      if (isset($_FILES['image'])) {
+      if (isset($_FILES['image'])  && $_FILES['image']['error'] != UPLOAD_ERR_NO_FILE) {
         //se asigna la ruta donde se ubican las imagenes
         $imagepath = '../../public/images/'.$onetarget['image'];
         // Se extraen detalles del archivo cargado
@@ -56,10 +56,12 @@ try {
             echo "Error al intentar eliminar la imagen.";
           }
         } else {
-          echo 'el archivo no esta dentro de las extensiones permitidas paraa imagen.';
+          echo 'el archivo no esta dentro de las extensiones permitidas para la imagen.';
         }
       } else {
-        echo 'No se ha seleccionado una imagen en la casilla.';
+        $_POST['image'] = $onetarget['image'];
+        $saveupdatetarget = new TargetController();
+        $saveupdatetarget->saveUpdateTarget($_POST['id'], $_POST['name'], $_POST['image']);
       }
     }
   }
@@ -71,7 +73,7 @@ echo '<div>
         <form method="POST" enctype="multipart/form-data">
           <img src="../../public/images/'.$onetarget['image'].'" alt="Imagen previa" width="200">
           Id de Imagen<input type="number" value="' . $onetarget['id'] . '" name="id" ><br>
-          Seleccionar nueva Imagen<input type="file" value="' . $onetarget['image'] . '" name="image"><br>
+          Seleccionar nueva Imagen<input type="file" name="image"><br>
           Nombre de Imagen<input type="text" value="' . $onetarget['name'] . '" name="name"><br>
           <button name="btn-update">Actualizar</button><br>            <button name="btn-cancel">Cancelar</button><br>
         </form>
