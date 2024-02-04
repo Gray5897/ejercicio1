@@ -71,7 +71,7 @@ try {
 
 echo '<div>
         <form method="POST" enctype="multipart/form-data">
-          <img src="../../public/images/'.$onetarget['image'].'" alt="Imagen previa" width="200">
+          <img src="../../public/images/'.$onetarget['image'].'" alt="Imagen previa" width="200"></br>
           Id de Imagen<input type="number" value="' . $onetarget['id'] . '" name="id" ><br>
           Seleccionar nueva Imagen<input type="file" name="image"><br>
           Nombre de Imagen<input type="text" value="' . $onetarget['name'] . '" name="name"><br>
