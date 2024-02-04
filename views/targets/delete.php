@@ -23,8 +23,14 @@ try {
 
 try {
   if (isset($_POST['btn-delete'])) {
-      $saveupdatetarget = new TargetController();
-      $saveupdatetarget->deleteTarget($_POST['id']);
+      $imagepath = '../../public/images/'.$onetarget['image'];
+      if (unlink($imagepath)) {
+        $saveupdatetarget = new TargetController();
+        $saveupdatetarget->deleteTarget($_POST['id']);
+      } else {
+        echo "Error al intentar eliminar la imagen.";
+      }
+
   }
 } catch (PDOException $e) {
   print "¡Error!: " . $e->getMessage() . "<br />";
@@ -32,9 +38,9 @@ try {
 
 echo '<div>
         <form method="POST">
+            <img src="../../public/images/'.$onetarget['image'].'" alt="Imagen previa" width="200"></br>
             Id de Imagen<input type="number" value="' . $onetarget['id'] . '" name="id" ><br>
             Nombre de Imagen<input type="text" value="' . $onetarget['name'] . '" name="name"><br>
-            Link de Imagen<input type="text" value="' . $onetarget['image'] . '" name="image"><br>
             <button name="btn-delete">Eliminar</button>
             <button name="btn-cancel">Cancelar</button><br>
         </form>
