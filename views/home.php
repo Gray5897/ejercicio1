@@ -7,6 +7,7 @@ require_once 'vendor/autoload.php';
 
 use App\Controllers\TargetController;
 
+
 $targetController = new TargetController();
 $targets = $targetController->getTargets();
 
@@ -20,7 +21,7 @@ $targets = $targetController->getTargets();
   foreach ($targets as $target) {
     echo '<div class="target" id"' . $target['id'] . '">
                 <img class= "imgs" src="public/images/' . $target['image'] . '" alt="">
-                <div class="titarget">
+                <div class="title-target">
                     ' . $target['name'] . '
                 </div>
                 <a href="controllers/detalleimage.php" class="detalle" id="' . $target['id'] . '">Ver detalle</a>

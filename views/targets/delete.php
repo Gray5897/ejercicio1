@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../../public/css/app.css">
+
 <?php
 
 require_once '../../vendor/autoload.php';
@@ -36,15 +38,14 @@ try {
   print "¡Error!: " . $e->getMessage() . "<br />";
 }
 
-echo '<div>
-        <form method="POST">
-            <img src="../../public/images/'.$onetarget['image'].'" alt="Imagen previa" width="200"></br>
-            Id de Imagen<input type="number" value="' . $onetarget['id'] . '" name="id" ><br>
-            Nombre de Imagen<input type="text" value="' . $onetarget['name'] . '" name="name"><br>
-            <button name="btn-delete">Eliminar</button>
-            <button name="btn-cancel">Cancelar</button><br>
-        </form>
-</div>';
+echo '<div class="style-target">
+      <form method="POST">
+        <img class="style-image" src="../../public/images/'.$onetarget['image'].'"></br>
+        <span>Id de Imagen</span><input type="number" value="' . $onetarget['id'] . '" name="id" ><br>
+        <span>Nombre de Imagen</span><input type="text" value="' . $onetarget['name'] . '" name="name"><br>
+        <button class="style-btn" name="btn-delete">Eliminar</button><button class="style-btn-cancel" name="btn-cancel">Cancelar</button><br>
+      </form>
+    </div>';
 
 ?>
 
