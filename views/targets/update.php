@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../../public/css/app.css">
+
 <?php
 
 require_once '../../vendor/autoload.php';
@@ -5,6 +7,7 @@ require_once '../../vendor/autoload.php';
 use App\Controllers\TargetController;
 
 include "../layouts/header.php";
+
 
 try {
   if (isset($_POST['btn-cancel'])) {
@@ -69,15 +72,15 @@ try {
   print "¡Error!: " . $e->getMessage() . "<br />";
 }
 
-echo '<div>
+echo '<div class="style-target">
         <form method="POST" enctype="multipart/form-data">
-          <img src="../../public/images/'.$onetarget['image'].'" alt="Imagen previa" width="200"></br>
-          Id de Imagen<input type="number" value="' . $onetarget['id'] . '" name="id" ><br>
-          Seleccionar nueva Imagen<input type="file" name="image"><br>
-          Nombre de Imagen<input type="text" value="' . $onetarget['name'] . '" name="name"><br>
-          <button name="btn-update">Actualizar</button><br>            <button name="btn-cancel">Cancelar</button><br>
+          <img class="style-image" src="../../public/images/'.$onetarget['image'].'"></br>
+          <span>Id de Imagen</span><input type="number" value="' . $onetarget['id'] . '" name="id" ><br>
+          <span>Nueva Imagen</span><input type="file" name="image"><br>
+          <span>Nombre de Imagen </span><input type="text" value="' . $onetarget['name'] . '" name="name"><br>
+          <button class="style-btn" name="btn-update">Actualizar</button><button class="style-btn-cancel" name="btn-cancel">Cancelar</button><br>
         </form>
-</div>';
+      </div>';
 
 ?>
 

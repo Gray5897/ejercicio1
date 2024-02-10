@@ -6,6 +6,13 @@ use App\Controllers\TargetController;
 
 include "../layouts/header.php";
 
+try {
+  if (isset($_POST['btn-cancel'])) {
+    header('Location: http://localhost/ejercicio1');
+  }
+} catch (PDOException $e) {
+  print "¡Error!: " . $e->getMessage() . "<br />";
+}
 
 try {
   if (isset($_POST['btn-save'])) {
@@ -50,13 +57,15 @@ try {
   print "¡Error!: " . $e->getMessage() . "<br />";
 }
 ?>
+<link rel="stylesheet" href="../../public/css/app.css">
 
-<form method="POST" enctype="multipart/form-data">
-  <input type="file" name="image"><br>
-  <input type="text" placeholder="Escriba el nombre de la imagen" name="name"><br>
-  <button type="submit" name="btn-save">Guardar</button>
-</form>
-
+<div class="style-target">
+  <form method="POST" enctype="multipart/form-data">
+    <span>Carga la Imagen</span><input type="file" name="image"><br>
+    <span>Nombre de Imagen </span><input type="text" name="name"><br>
+    <button class="style-btn" name="btn-save">Guardar</button><button class="style-btn-cancel" name="btn-cancel">Cancelar</button><br>
+  </form>
+</div>;
 
 <?php
 include "../layouts/footer.php";
