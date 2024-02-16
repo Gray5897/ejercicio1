@@ -19,7 +19,7 @@ $targets = $targetController->getTargets();
 <div class="container">
   <?php
   foreach ($targets as $target) {
-    echo '<div class="target" id"' . $target['id'] . '">
+    echo '<div class="target" id="' . $target['id'] . '">
                 <img class= "imgs" src="public/images/' . $target['image'] . '" alt="">
                 <div class="title-target">
                     ' . $target['name'] . '
@@ -33,15 +33,17 @@ $targets = $targetController->getTargets();
 </div>
 
 <script>
+  const currentHost = window.location.href.toString();
+
   function openCreateView() {
-    window.location.replace('/ejercicio1/views/targets/create.php');
+    window.location.replace(currentHost + 'views/targets/create.php');
   }
 
   function OpenUpdateTarget(id) {
-    window.location.replace('/ejercicio1/views/targets/update.php?id=' + id);
+    window.location.replace(currentHost + 'views/targets/update.php?id=' + id);
   }
 
   function OpenDeleteTarget(id) {
-    window.location.replace('/ejercicio1/views/targets/delete.php?id=' + id);
+    window.location.replace(currentHost + 'views/targets/delete.php?id=' + id);
   }
 </script>

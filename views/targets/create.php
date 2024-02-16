@@ -5,53 +5,38 @@ require_once '../../vendor/autoload.php';
 use App\Controllers\TargetController;
 
 include "../layouts/header.php";
-
-try {
-  if (isset($_POST['btn-cancel'])) {
-    header('Location: http://localhost/ejercicio1');
-  }
-} catch (PDOException $e) {
-  print "¡Error!: " . $e->getMessage() . "<br />";
-}
-
 try {
   if (isset($_POST['btn-save'])) {
     if (empty($_POST['name'])) {
-      echo "Debe llenar todos los campos, no se permiten valores vacios";
-    } else {
-      if (isset($_FILES['image']) && $_FILES['image']['error'] != UPLOAD_ERR_NO_FILE) {
-        // Se extraen detalles del archivo cargado
-        $fileTmpPath = $_FILES['image']['tmp_name'];
-        $fileName = $_FILES['image']['name'];
-        $fileSize = $_FILES['image']['size'];
-        $fileType = $_FILES['image']['type'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps)); //Se extrae la extension del archivo
-        $newFileName = md5(time() . $fileName) . '.' . $fileExtension; //Se limpia el nombre de caracteres especiales
-        $_POST['image'] = $newFileName;
-        var_dump($_POST['image']);
-        $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'doc');
-        // Se valida que el archivo este en las extensiones compatibles
-        if (in_array($fileExtension, $allowedfileExtensions)) {
-          // se almacena en una variable la direccion donde se alojara el archivo
-          $uploadFileDir = '../../public/images/';
-          $dest_path = $uploadFileDir . $newFileName;
-          if (move_uploaded_file($fileTmpPath, $dest_path)) {
-            $target = new TargetController();
-            $target->saveTarget($_POST['image'], $_POST['name']);
-          } else {
-            echo 'Se produjo algún error al mover el archivo al directorio de carga.';
-          }
-        } else {
-          echo 'el archivo no esta dentro de las extensiones permitidas paraa imagen.';
-        }
-      } else {
-        echo 'No se ha seleccionado una imagen en la casilla.';
+      $errorMessage = 'Debe llenar todos los campos, no se permiten valores vacios';
+      return header('Location: http://localhost/tests/ejercicio1/views/targets/create.php?_error=' . $errorMessage);
+    }
+    if (isset($_FILES['image']) && empty($_FILES['image']['name'])) {
+      $errorMessage = 'No se ha seleccionado una imagen en la casilla.';
+      return header('Location: http://localhost/tests/ejercicio1/views/targets/create.php?_error=' . $errorMessage);
+    }
+    $target = new TargetController();
+    $fileTmpPath = $_FILES['image']['tmp_name'];
+    $newFileName = $target->getFileName($_FILES['image']);
+
+    $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'doc');
+    // Se valida que el archivo este en las extensiones compatibles
+    if (!in_array($target->getFileExtension($newFileName), $allowedfileExtensions)) {
+      $errorMessage = 'el archivo no esta dentro de las extensiones permitidas paraa imagen.';
+      return header('Location: http://localhost/tests/ejercicio1/views/targets/create.php?_error=' . $errorMessage);
+    }
+    // se almacena en una variable la direccion donde se alojara el archivo
+    $uploadFileDir = '../../public/images/';
+    $dest_path = $uploadFileDir . $newFileName;
+    if (move_uploaded_file($fileTmpPath, $dest_path)) {
+      $target = new TargetController();
+      $onSuccess = $target->saveTarget($newFileName, $_POST['name']);
+      if ($onSuccess) {
+        return header('Location: http://localhost/tests/ejercicio1');
       }
     }
-
-    //$target = new TargetController();
-    //$target->saveTarget($_POST['name']);
+    $errorMessage = 'Se produjo algún error al mover el archivo al directorio de carga.';
+    return header('Location: http://localhost/tests/ejercicio1/views/targets/create.php?_error=' . $errorMessage);
   }
 } catch (PDOException $e) {
   print "¡Error!: " . $e->getMessage() . "<br />";
@@ -60,13 +45,24 @@ try {
 <link rel="stylesheet" href="../../public/css/app.css">
 
 <div class="style-target">
-  <form method="POST" enctype="multipart/form-data">
+  <form method="POST" action="#" enctype="multipart/form-data">
     <span>Carga la Imagen</span><input type="file" name="image"><br>
     <span>Nombre de Imagen </span><input type="text" name="name"><br>
-    <button class="style-btn" name="btn-save">Guardar</button><button class="style-btn-cancel" name="btn-cancel">Cancelar</button><br>
+    <button type="submit" class="style-btn" name="btn-save">Guardar</button>
+    <button type="button" class="style-btn-cancel" name="btn-cancel" onclick="back()">Cancelar</button><br>
+    <?php echo (isset($_GET['_error']) ? $_GET['_error'] : ''); ?>
   </form>
 </div>;
 
 <?php
 include "../layouts/footer.php";
 ?>
+
+
+<script>
+  const currentHost = window.location.hostname.toString();
+
+  function back() {
+    window.location = '/tests/ejercicio1';
+  }
+</script>

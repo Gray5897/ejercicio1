@@ -12,6 +12,19 @@ class TargetController
   {
   }
 
+  public function getFileName($imageFile)
+  {
+    $fileName = $imageFile['name'];
+    $fileExtension = $this->getFileExtension($fileName); //Se extrae la extension del archivo
+    return md5(time() . $fileName) . '.' . $fileExtension; //Se limpia el nombre de caracteres especiales
+  }
+
+  public function getFileExtension($fileName)
+  {
+    $fileNameCmps = explode(".", $fileName);
+    return strtolower(end($fileNameCmps)); //Se extrae la extension del archivo
+  }
+
   public function saveTarget($image, $name)
   {
     try {
@@ -20,9 +33,9 @@ class TargetController
       $savetarget->bindParam(':image', $image);
       $savetarget->bindParam(':name', $name);
       $savetarget->execute();
-      header('Location: http://localhost/ejercicio1');
+      return true;
     } catch (Exception $e) {
-      echo $e->getMessage();
+      return false;
     }
   }
 
