@@ -12,6 +12,13 @@ class TargetController
   {
   }
 
+  /**
+   * get file name from image
+   *
+   * @param object $imageFile este es el archivo de una imagen
+   *
+   * @return string
+   */
   public function getFileName($imageFile)
   {
     $fileName = $imageFile['name'];
@@ -19,12 +26,27 @@ class TargetController
     return md5(time() . $fileName) . '.' . $fileExtension; //Se limpia el nombre de caracteres especiales
   }
 
+  /**
+   * get file extension from image
+   *
+   * @param string $fileName este es el nombre de la imagen
+   *
+   * @return string
+   */
   public function getFileExtension($fileName)
   {
     $fileNameCmps = explode(".", $fileName);
     return strtolower(end($fileNameCmps)); //Se extrae la extension del archivo
   }
 
+  /**
+   * save target
+   *
+   * @param string $image nombre de la imagen
+   * @param string $name target name
+   *
+   * @return boolean
+   */
   public function saveTarget($image, $name)
   {
     try {

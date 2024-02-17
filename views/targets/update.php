@@ -31,7 +31,7 @@ try {
     } else {
       if (isset($_FILES['image'])  && $_FILES['image']['error'] != UPLOAD_ERR_NO_FILE) {
         //se asigna la ruta donde se ubican las imagenes
-        $imagepath = '../../public/images/'.$onetarget['image'];
+        $imagepath = '../../public/images/' . $onetarget['image'];
         // Se extraen detalles del archivo cargado
         $fileTmpPath = $_FILES['image']['tmp_name'];
         $fileName = $_FILES['image']['name'];
@@ -74,21 +74,25 @@ try {
 
 echo '<div class="style-target">
         <form method="POST" enctype="multipart/form-data">
-          <img class="style-image" src="../../public/images/'.$onetarget['image'].'"></br>
+          <img class="style-image" src="../../public/images/' . $onetarget['image'] . '"></br>
           <span>Id de Imagen</span><input type="number" value="' . $onetarget['id'] . '" name="id" ><br>
           <span>Nueva Imagen</span><input type="file" name="image"><br>
           <span>Nombre de Imagen </span><input type="text" value="' . $onetarget['name'] . '" name="name"><br>
-          <button class="style-btn" name="btn-update">Actualizar</button><button class="style-btn-cancel" name="btn-cancel">Cancelar</button><br>
+          <button class="style-btn" name="btn-update">Actualizar</button>
+          <button type="button" onclick="back()" class="style-btn-cancel" name="btn-cancel">Cancelar</button><br>
         </form>
       </div>';
 
 ?>
 
-
-
-
 <?php
 include "../layouts/footer.php";
 ?>
 
+<script>
+  const currentHost = window.location.hostname.toString();
 
+  function back() {
+    window.location = '/tests/ejercicio1';
+  }
+</script>
